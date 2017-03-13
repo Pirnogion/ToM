@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+    	"top": "tom:blocks/barrel_top_closed",
+        "bottom": "tom:blocks/barrel_bottom",
+        "front": "tom:blocks/barrel_front",
+        "side": "tom:blocks/barrel_side"
+    }
+}

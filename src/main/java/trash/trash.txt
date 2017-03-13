@@ -1,0 +1,201 @@
+///
+if ( pointerDirection == PietDirections.RIGHT && codelChooserDirection == PietDirections.LEFT )
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.rightTopCodel.getX()+1, curBlock.rightTopCodel.getY());
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.rightTopCodel;
+        }
+        else if ( pointerDirection == PietDirections.RIGHT && codelChooserDirection == PietDirections.RIGHT )
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.rightBottomCodel.getX()+1, curBlock.rightBottomCodel.getY());
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.rightBottomCodel;
+        }
+        
+        else if ( pointerDirection == PietDirections.LEFT && codelChooserDirection == PietDirections.LEFT )
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.leftBottomCodel.getX()-1, curBlock.leftBottomCodel.getY());
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.leftBottomCodel;
+        }
+        else if ( pointerDirection == PietDirections.LEFT && codelChooserDirection == PietDirections.RIGHT )
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.leftTopCodel.getX()-1, curBlock.leftTopCodel.getY());
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.leftTopCodel;
+        }
+        
+        else if ( pointerDirection == PietDirections.UP && codelChooserDirection == PietDirections.LEFT)
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.topLeftCodel.getX(), curBlock.topLeftCodel.getY()-1);
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.topLeftCodel;
+        }
+        else if ( pointerDirection == PietDirections.UP && codelChooserDirection == PietDirections.RIGHT)
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.topRightCodel.getX(), curBlock.topRightCodel.getY()-1);
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.topRightCodel;
+        }
+        
+        else if ( pointerDirection == PietDirections.DOWN && codelChooserDirection == PietDirections.LEFT)
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.bottomRightCodel.getX(), curBlock.bottomRightCodel.getY()+1);
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.bottomRightCodel;
+        }
+        else if ( pointerDirection == PietDirections.DOWN && codelChooserDirection == PietDirections.RIGHT)
+        {
+            nextBlockCodel = new Point<Integer>(curBlock.bottomLeftCodel.getX(), curBlock.bottomLeftCodel.getY()+1);
+            nextBlock = new PietColoredBlock(rawProgram, nextBlockCodel);
+            
+            curBlockCodel = curBlock.bottomLeftCodel;
+        }
+        
+        if (nextBlockCodel != null && rawProgram.getColor(nextBlockCodel.getX(), nextBlockCodel.getY()) == PietColorset.getBlackColor())
+        {   
+            if (nextStepTries == nextStepMaxTries) { running = false; return; }
+            
+            if (nextStepTries % 2 == 0) mirrorCodelChooser();
+            else rotatePointerClockwise();
+            
+            nextStepTries += 1;
+            
+            pointer.setXY(curBlockCodel.getX(), curBlockCodel.getY());
+        }
+        else if (nextBlock.blockColor == PietColorset.getWhiteColor())
+        {
+            int nextCodelColor = 0;
+            
+            switch(pointerDirection)
+            {
+                case PietDirections.RIGHT:
+                    nextCodelColor = rawProgram.getColor(pointer.getX()+1, pointer.getY());
+                    if ( nextCodelColor != PietColorset.getBlackColor() )
+                    {
+                        pointer.setX(pointer.getX()+1);
+                    }
+                    break;
+                    
+                case PietDirections.LEFT:
+                    nextCodelColor = rawProgram.getColor(pointer.getX()-1, pointer.getY());
+                    if ( nextCodelColor != PietColorset.getBlackColor() )
+                    {
+                        pointer.setX(pointer.getX()-1);
+                    }
+                    break;
+                    
+                case PietDirections.UP:
+                    nextCodelColor = rawProgram.getColor(pointer.getX(), pointer.getY()-1);
+                    if ( nextCodelColor != PietColorset.getBlackColor() )
+                    {
+                        pointer.setY(pointer.getY()-1);
+                    }
+                    break;
+                    
+                case PietDirections.DOWN:
+                    nextCodelColor = rawProgram.getColor(pointer.getX(), pointer.getY()+1);
+                    if ( nextCodelColor != PietColorset.getBlackColor() )
+                    {
+                        pointer.setY(pointer.getY()+1);
+                    }
+                    break;
+            }
+            
+            if ( nextCodelColor == PietColorset.getBlackColor() )
+            {
+                mirrorCodelChooser();
+                rotatePointerClockwise();
+            }
+        }
+        else if ( curBlock.blockColor == PietColorset.getWhiteColor() )
+        {
+            // Nothing
+        }
+        else
+        {
+            pointer.setXY(nextBlockCodel.getX(), nextBlockCodel.getY());
+            
+            IPietCommand cmd = commandManager.getCommand
+            (
+                    PietColorset.getCommandSignature(curBlock.blockColor, nextBlock.blockColor),
+                    this,
+                    stack,
+                    curBlock.blockSize
+            );
+            
+            cmd.execute();
+        }
+///
+
+private int[] extractColumn(int column)
+    {
+        int[] extractedColumn = new int[programHeight];
+        
+        if (column >= 0 && column <= programWidth)
+            for (int i = 0; i < programHeight; ++i)
+                extractedColumn[i] = program[i][column];
+        
+        return extractedColumn;
+    }
+    
+    private int[] extractRow(int row)
+    {
+        int[] extractedRow = new int[programWidth];
+        
+        if (row >= 0 && row <= programHeight)
+            for (int i = 0; i < programHeight; ++i)
+                extractedRow[i] = program[row][i];
+        
+        return extractedRow;
+    }
+    
+    //            GL11.glEnable(GL11.GL_DEPTH_TEST);
+//            GL11.glDisable(GL11.GL_BLEND);
+//            GL11.glEnable(GL11.GL_LIGHTING);
+//            GL11.glEnable(GL11.GL_CULL_FACE);
+//            GL11.glEnable(GL11.GL_TEXTURE_2D);
+//
+//            GL11.glPushMatrix();
+//
+//            if (itemStack.getItem() instanceof ItemBlock)
+//                GL11.glTranslated(0, -0.1d, 0);
+//            else
+//                GL11.glTranslated(0, -0.25d, 0);
+//
+//            GL11.glRotated(180.0d, 0.0d, 1.0d, 0.0d);
+//
+//            EntityItem entityItem = new EntityItem(mc.theWorld, 0D, 0D, 0D, itemStack);
+//            entityItem.hoverStart = 0;
+//
+//            RenderHelper.enableStandardItemLighting();
+//            //RenderManager.instance.func_147939_a(entityItem, 0, 0, 0, 0.2F, 0.2F, false);
+//            RenderItem renderItem = mc.getRenderItem();
+//            renderItem.renderItem(entityItem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+//            RenderHelper.disableStandardItemLighting();
+//
+//            GL11.glPopMatrix();
+//
+//            GL11.glDisable(GL11.GL_LIGHTING);
+//            GL11.glDisable(GL11.GL_CULL_FACE);
+//            GL11.glDisable(GL11.GL_DEPTH_TEST);
+//
+//            GL11.glPushMatrix();
+//
+//            GL11.glScaled(0.02d, -0.02d, 0.02d);
+//            GL11.glTranslated(-5, 2.5d, 10);
+//            mc.fontRendererObj.drawString(Integer.toString(itemStack.stackSize), 0, 0, 0xFFFFFF);
+//
+//            GL11.glPopMatrix();
+//
+//            GL11.glEnable(GL11.GL_BLEND);
+//            GL11.glDisable(GL11.GL_TEXTURE_2D);
+//
+//            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_CONSTANT_ALPHA) ;

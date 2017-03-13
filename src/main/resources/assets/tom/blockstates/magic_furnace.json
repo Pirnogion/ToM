@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "isactive=false": { "model": "tom:magic_furnace_off" },
+        "isactive=true": { "model": "tom:magic_furnace_on" }
+    }
+}

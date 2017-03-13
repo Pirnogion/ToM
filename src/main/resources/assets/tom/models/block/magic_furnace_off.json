@@ -1,0 +1,22 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "tom:blocks/magical_furnace_top",
+        "top": "tom:blocks/magical_furnace_top",
+        "bottom": "tom:blocks/magical_furnace_bottom",
+        "side": "tom:blocks/magical_furnace_side"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 3, 16 ],
+            "faces": {
+                "up":    { "texture": "#top" },
+                "down":  { "texture": "#bottom" },
+                "west":  { "texture": "#side" },
+                "east":  { "texture": "#side" },
+                "north":  { "texture": "#side" },
+                "south":  { "texture": "#side" }
+            }
+        }
+    ]
+}

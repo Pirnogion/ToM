@@ -1,0 +1,10 @@
+tile.barrel.name=Wooden barrel
+tile.crystaliser.name=Crystaliser
+tile.magic_furnace.name=Magical furnace
+tile.piet_writing_table.name=Scrolls wiriting table
+
+item.dark_crystal.name=Dark crystal
+item.shard_of_crystal.name=Shard of crystal
+item.wooden_cap.name=Wooden cap
+
+itemGroup.tomstuff=ToM stuff

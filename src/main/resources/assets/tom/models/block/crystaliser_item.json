@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+    	"top": "tom:blocks/crystaliser_top",
+        "front": "tom:blocks/crystaliser_front",
+        "side": "tom:blocks/crystaliser_side"
+    }
+}

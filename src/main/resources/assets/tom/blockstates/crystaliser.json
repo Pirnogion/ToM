@@ -1,0 +1,8 @@
+{
+    "variants": {
+    	"facing=north": { "model": "tom:crystaliser" },
+    	"facing=south": { "model": "tom:crystaliser", "y": 180 },
+    	"facing=west": { "model": "tom:crystaliser", "y": 270 },
+    	"facing=east": { "model": "tom:crystaliser", "y": 90 }
+    }
+}

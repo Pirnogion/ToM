@@ -1,0 +1,12 @@
+{
+    "variants": {
+    	"closed=false,facing=north": { "model": "tom:barrel_opened_empty" },
+    	"closed=false,facing=south": { "model": "tom:barrel_opened_empty", "y": 180 },
+    	"closed=false,facing=west": { "model": "tom:barrel_opened_empty", "y": 270 },
+    	"closed=false,facing=east": { "model": "tom:barrel_opened_empty", "y": 90 },
+    	"closed=true,facing=north": { "model": "tom:barrel_closed" },
+    	"closed=true,facing=south": { "model": "tom:barrel_closed", "y": 180 },
+    	"closed=true,facing=west": { "model": "tom:barrel_closed", "y": 270 },
+    	"closed=true,facing=east": { "model": "tom:barrel_closed", "y": 90 }
+    }
+}

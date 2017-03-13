@@ -1,0 +1,10 @@
+tile.barrel.name=Деревянная бочка
+tile.crystaliser.name=Кристаллизатор
+tile.magic_furnace.name=Магическая печь
+tile.piet_writing_table.name=Столик создания свиктов
+
+item.dark_crystal.name=Темный кристалл
+item.shard_of_crystal.name=Осколок кристалла
+item.wooden_cap.name=Деревянная крышка
+
+itemGroup.tomstuff=ToM стафф
